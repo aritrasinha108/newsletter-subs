@@ -1,6 +1,8 @@
 const express=require('express');
 const path =require('path');
 const app=express();
+const mongoose=require('mongoose');
+app.use(express.urlencoded({extended:false}))
 app.use(express.json());//express.json() and bodyParser.json() dose the same job
 // app.use(bodyParser.json());
 const mailRouter=require("./routes/mailRouter");
@@ -21,12 +23,13 @@ mongoose.connect(process.env.MONGOURI,
     .then(()=>{
         console.log("Mongodb connected...");
     })
-    .catch(()=>{
+    .catch((err)=>{
+        console.log(err);
         console.log("Connection failed...")
     });
 
 app.use('/',mailRouter);
 
 
-app.listen(80 || process.env.PORT,()=>{
+app.listen(3000 || process.env.PORT,()=>{
 console.log("The server started running on the port 80")});
